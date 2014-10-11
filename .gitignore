@@ -56,3 +56,5 @@ target/
 # My json file
 *.json
 
+#Mac stuff
+.DS_Store
