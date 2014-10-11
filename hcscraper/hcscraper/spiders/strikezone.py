@@ -6,13 +6,14 @@ from hcscraper.items import HcscraperItem
 
 class StrikezoneSpider(CrawlSpider):
     name = "strikezone"
-    allowed_domains = ["shop.strikezoneonline.com/"]
-    start_urls = (
-        #'http://www.shop.strikezoneonline.com/Category/Hero_Clix_Singles.html/',
-	'http://shop.strikezoneonline.com/Category/2099_Collectors_Set.html',
-    )
+    allowed_domains = ["shop.strikezoneonline.com"]
+    start_urls = ['http://shop.strikezoneonline.com/Category/2099_Collectors_Set.html']
 
-    def parse(self, response):
+    rules = (
+		Rule(LinkExtractor(allow=('http:\/\/shop\.strikezoneonline\.com\/Category\/\w+.html'), deny=('http:\/\/shop\.strikezoneonline.com\/Category\/Games\.html')), callback='parse_item', follow=True),
+	)
+
+    def parse_item(self, response):
 	    products = response.css('tr[class^="ItemTableRow"]')
 	    group = []
 	    for product in products:
