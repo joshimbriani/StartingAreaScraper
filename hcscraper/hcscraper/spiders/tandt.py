@@ -4,6 +4,9 @@ from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors import LinkExtractor
 from hcscraper.items import HcscraperItem
 
+ITEM_PIPELINES = [
+		        'event.pipelines.DuplicatesPipeline'
+		]
 
 class TandtSpider(CrawlSpider):
     name = "tandt"
@@ -21,8 +24,8 @@ class TandtSpider(CrawlSpider):
 	group = []
 	for product in products:
 		hc = HcscraperItem()
-		hc["name"] = product.css('.cat_result_text h2 a::text').extract()
-		hc["price"] = [product.css('.price_text::text')[0].extract()]
+		hc["name"] = product.css('.cat_result_text h2 a::text').extract()[0]
+		hc["price"] = product.css('.price_text::text')[0].extract()
 		hc["source"] = "TT"
 		group.append(hc)
 	return group

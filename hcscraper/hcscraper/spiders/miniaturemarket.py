@@ -18,11 +18,11 @@ class MiniaturemarketSpider(CrawlSpider):
 	group = []
 	for product in products:
 		hc = HcscraperItem()
-		hc["name"] = product.css('.product-name a::text').extract()
+		hc["name"] = product.css('.product-name a::text').extract()[0]
 		if len(product.css('.price-box .regular-price .price::text').extract()) > 0:
-			hc["price"] = [product.css('.price-box .regular-price .price::text').extract()[0][1:]]
+			hc["price"] = product.css('.price-box .regular-price .price::text').extract()[0][1:]
 		else:
-			hc["price"] = [product.css('.price-box .special-price .price::text').extract()[0].strip(' \r\n')]
+			hc["price"] = product.css('.price-box .special-price .price::text').extract()[0].strip(' \r\n')
 		hc["source"] = 'MM'
 		group.append(hc)
 	return group

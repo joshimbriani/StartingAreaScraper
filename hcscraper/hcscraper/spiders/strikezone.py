@@ -18,9 +18,8 @@ class StrikezoneSpider(CrawlSpider):
 	    group = []
 	    for product in products:
 		    hc = HcscraperItem()
-		    self.log(product.css('td:nth-child(1) a::text').extract())
-		    hc["name"] = [product.css('td:nth-child(1) a::text').extract()[0] + ' - ' +  product.css('td:nth-child(2)::text').extract()[0].strip(' \r\n\t')]
-		    hc["price"] = product.css('span[name="ItemPrice"]::text').extract()
+		    hc["name"] = product.css('td:nth-child(1) a::text').extract()[0] + ' - ' +  product.css('td:nth-child(2)::text').extract()[0].strip(' \r\n\t')
+		    hc["price"] = product.css('span[name="ItemPrice"]::text').extract()[0]
 		    hc["source"] = "SZ"
 		    group.append(hc)
 	    return group
