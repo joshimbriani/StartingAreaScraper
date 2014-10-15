@@ -21,5 +21,6 @@ class StrikezoneSpider(CrawlSpider):
 		    self.log(product.css('td:nth-child(1) a::text').extract())
 		    hc["name"] = [product.css('td:nth-child(1) a::text').extract()[0] + ' - ' +  product.css('td:nth-child(2)::text').extract()[0].strip(' \r\n\t')]
 		    hc["price"] = product.css('span[name="ItemPrice"]::text').extract()
+		    hc["source"] = "SZ"
 		    group.append(hc)
 	    return group

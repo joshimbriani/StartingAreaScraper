@@ -23,5 +23,6 @@ class TandtSpider(CrawlSpider):
 		hc = HcscraperItem()
 		hc["name"] = product.css('.cat_result_text h2 a::text').extract()
 		hc["price"] = [product.css('.price_text::text')[0].extract()]
+		hc["source"] = "TT"
 		group.append(hc)
 	return group
